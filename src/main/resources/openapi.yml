@@ -1,0 +1,80 @@
+openapi: 3.0.2
+info:
+  version : 1
+  title: Foresight
+tags:
+  - name: items
+    description: Items operations
+paths:
+  /items:
+    get:
+      tags:
+        - items
+      operationId: getItems
+      responses:
+        '200':
+          description: A list of items
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemsDTO'
+  /items/calculateCompleteonStatus/{uid}:
+    get:
+      tags:
+        - items
+      operationId: calculateStatus
+      parameters:
+        - name: uid
+          in: path
+          description: calculateStatus
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: calculated
+          content:
+            application/json:
+              schema:
+                type: number
+  /items/{uid}:
+    delete:
+      tags:
+        - items
+      operationId: deleteItemById
+      parameters:
+        - name: uid
+          in: path
+          description: uid of item to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: deleted item by uid successfully
+          content:
+            application/json:
+              schema:
+                type: boolean
+components:
+  schemas:
+    ItemsDTO:
+      type: array
+      items:
+        type: ItemDTO
+    ItemDTO:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        parentUid:
+          type: string
+        startDate:
+          type: date
+        endDate:
+          type: date
+
